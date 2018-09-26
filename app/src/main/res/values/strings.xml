@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Decider</string>
+    <string name="startBtnText">Start</string>
+    <string name="welcomeText">Welcome</string>
+</resources>
