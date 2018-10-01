@@ -2,4 +2,7 @@
     <string name="app_name">Decider</string>
     <string name="startBtnText">Start</string>
     <string name="welcomeText">Welcome</string>
+    <string name="decidingText">Deciding…</string>
+    <string name="done">Done!</string>
+    <string name="test">test</string>
 </resources>
