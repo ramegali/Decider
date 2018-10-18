@@ -1,12 +1,18 @@
 package com.nedo.decider;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Random;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     TextView welcomeText;
@@ -25,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                decide(view);
+                //decide(view);
+                String location = "01453";
+                Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+                intent.putExtra("location", location);
+                startActivity(intent);
             }
         });
     }
