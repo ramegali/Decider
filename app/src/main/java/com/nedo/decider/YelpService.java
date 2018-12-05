@@ -1,5 +1,7 @@
 package com.nedo.decider;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class YelpService {
+    public static final String TAG = YelpService.class.getSimpleName();
 
     public static void findRestaurants(String location, Callback callback) {
         OkHttpClient client = new OkHttpClient.Builder().build();
@@ -37,7 +40,9 @@ public class YelpService {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
 
         try {
+            // Convert response to string
             String jsonData = response.body().string();
+            // get JSONObject and filter by businesses
             JSONObject yelpJSON = new JSONObject(jsonData);
             JSONArray businessesJSON = yelpJSON.getJSONArray("businesses");
             for (int i = 0; i < businessesJSON.length(); i++) {
@@ -66,6 +71,7 @@ public class YelpService {
                 for (int y = 0; y < categoriesJSON.length(); y++) {
                     categories.add(categoriesJSON.getJSONObject(y).getString("title"));
                 }
+                // Create a new restaurant object and place into array of restaurants
                 Restaurant restaurant = new Restaurant(name, phone, website, rating,
                         imageUrl, address, latitude, longitude, categories);
                 restaurants.add(restaurant);

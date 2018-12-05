@@ -37,6 +37,7 @@ import org.xml.sax.InputSource;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,14 +69,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     // Int for permission results request
     private static final int ALL_PERMISSIONS_RESULT = 1011;
 
+    // Log for debugging
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     TextView welcomeText;
     TextView decisionShuffleText;
     Random rand = new Random();
+    String destiny;
     String mLocation;
 
     String food_choices[] = {"pizza", "chinese", "japanese", "burgers", "subs",
                              "italian", "mexican", "thai", "greek", "sushi",
-                             "seafood", "brazilian" };
+                             "seafood", "brazilian", "vietnamese", "bars", "american",
+                             "laotian", "sandwiches", "cambodian", "indian", "vegetarian",
+                             "vegan", "mediterranean", "asian" };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                decide(view);
+                destiny = decide(view);
 //                mLocation = "01453";
                 mLocation = getPostalCodeFromLatLng(location);
 //                Log.d("debug: Zip Code value", mLocation);
@@ -110,11 +118,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+
         // Build Google API client
         googleApiClient = new GoogleApiClient.Builder(this).
                 addApi(LocationServices.API).
                 addConnectionCallbacks(this).
                 addOnConnectionFailedListener(this).build();
+
+//        Bundle bundle = getIntent().getExtras();
+//        ArrayList<Restaurant> restaurants = bundle.getParcelableArrayList("restaurants");
+        ArrayList<Restaurant> restaurants = getIntent().getParcelableArrayListExtra("restaurants");
+        Log.v(TAG, "hi from main: " + restaurants);
+//        if (restaurants.size() == 0) {
+//            Log.v(TAG, "EMPTY");
+//        }
+//        else {
+//            Log.v(TAG, "NOT EMPTY");
+//        }
     }
 
     private String getPostalCodeFromLatLng(Location location) {
@@ -209,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     // to do this asynchronously, as all changes made inside
     // the decide() function are only displayed after the
     // function returns.
-    public void decide(View view)
+    public String decide(View view)
     {
         welcomeText = findViewById(R.id.welcomeText);
         decisionShuffleText = findViewById(R.id.decisionShuffleText);
@@ -224,10 +244,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // choose random index
         int index = rand.nextInt(food_choices.length);
         // select cuisine based on random index
-        decisionShuffleText.setText(food_choices[index]);
+        String destiny = food_choices[index];
+        decisionShuffleText.setText(destiny);
         decisionShuffleText.setVisibility(View.VISIBLE);
 
         welcomeText.setText(R.string.done);
+        return destiny;
     }
 
     @Override
