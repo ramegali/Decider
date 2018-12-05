@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
                 intent.putExtra("location", mLocation);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -125,16 +125,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 addConnectionCallbacks(this).
                 addOnConnectionFailedListener(this).build();
 
-//        Bundle bundle = getIntent().getExtras();
-//        ArrayList<Restaurant> restaurants = bundle.getParcelableArrayList("restaurants");
-        ArrayList<Restaurant> restaurants = getIntent().getParcelableArrayListExtra("restaurants");
-        Log.v(TAG, "hi from main: " + restaurants);
-//        if (restaurants.size() == 0) {
-//            Log.v(TAG, "EMPTY");
-//        }
-//        else {
-//            Log.v(TAG, "NOT EMPTY");
-//        }
     }
 
     private String getPostalCodeFromLatLng(Location location) {
@@ -250,6 +240,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         welcomeText.setText(R.string.done);
         return destiny;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                ArrayList<Restaurant> restaurants = data.getParcelableArrayListExtra("restaurants");
+                Log.v(TAG, "hi from main: " + restaurants.get(0).getName());
+
+            }
+        }
     }
 
     @Override

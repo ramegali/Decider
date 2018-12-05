@@ -43,11 +43,8 @@ public class RestaurantsActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                String jsonData = response.body().string();
                 if (response.isSuccessful()) {
-//                    Log.v(TAG, jsonData);
                     restaurants = yelpService.processResults(response);
-                    Log.v(TAG, "hi from restaurantsactivity: " + restaurants.get(0).getName());
 //                    for (int i = 0; i < restaurants.size(); i++) {
 //                        Log.v(TAG, "NAME: " + restaurants.get(i).getName());
 //                        for (String categories : restaurants.get(i).getCategories()
@@ -55,22 +52,14 @@ public class RestaurantsActivity extends AppCompatActivity {
 //                            Log.v(TAG, "CATEGORIES: " + categories);
 //                        }
 //                    }
-
-//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelableArrayList("restaurants", restaurants);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-
-
                     RestaurantsActivity.this.runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
-
-                            Intent intent = new Intent(RestaurantsActivity.this, MainActivity.class);
+                            Intent intent = new Intent();
                             intent.putParcelableArrayListExtra("restaurants", restaurants);
-                            startActivity(intent);
+                            setResult(RESULT_OK, intent);
+                            finish();
                         }
                     });
                 }

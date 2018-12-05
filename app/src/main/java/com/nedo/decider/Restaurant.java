@@ -11,10 +11,10 @@ public class Restaurant implements Parcelable {
     private String website;
     private double rating;
     private String imageUrl;
-    private ArrayList<String> address = new ArrayList<>();
+    private ArrayList<String> address;
     private double latitude;
     private double longitude;
-    private ArrayList<String> categories = new ArrayList<>();
+    private ArrayList<String> categories;
 
     public Restaurant(String name, String phone, String website,
                       double rating, String imageUrl, ArrayList<String> address,
@@ -44,9 +44,7 @@ public class Restaurant implements Parcelable {
 //        this.categories = source.createStringArrayList();
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public String getPhone() {
         return phone;
@@ -56,9 +54,7 @@ public class Restaurant implements Parcelable {
         return  website;
     }
 
-    public double getRating() {
-        return rating;
-    }
+    public double getRating() { return rating; }
 
     public String getImageUrl(){
         return imageUrl;
