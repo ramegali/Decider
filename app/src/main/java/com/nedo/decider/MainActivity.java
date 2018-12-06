@@ -170,15 +170,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private String getPostalCodeFromLatLng(Location location) {
-        Geocoder mGeo = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses = null;
         String postalCode = null;
 
         try {
-            addresses = mGeo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            Geocoder mGeo = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = mGeo.getFromLocation(location.getLatitude(),
+                    location.getLongitude(), 1);
             Address address = addresses.get(0);
             postalCode = address.getPostalCode();
-//            Log.d("log", "Postal code: " + postalCode);
         } catch (IOException e) {
             e.printStackTrace();
         }
