@@ -18,12 +18,16 @@ import okhttp3.Response;
 
 public class YelpService {
     public static final String TAG = YelpService.class.getSimpleName();
+    static final String TWENTY_MILES_IN_METERS = "32187";
 
-    public static void findRestaurants(String location, Callback callback) {
+    public static void findRestaurants(String location, String category, Callback callback) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.YELP_BASE_URL).newBuilder();
         urlBuilder.addQueryParameter(Constants.YELP_LOCATION_QUERY_PARAMETER, location);
+        urlBuilder.addQueryParameter(Constants.YELP_OPEN_QUERY_PARAMETER, "true");
+        urlBuilder.addQueryParameter(Constants.YELP_CATEGORIES_QUERY_PARAMETER, category);
+        urlBuilder.addQueryParameter(Constants.YELP_CATEGORIES_RADIUS_PARAMETER, TWENTY_MILES_IN_METERS);
         String url = urlBuilder.build().toString();
 
         Request request= new Request.Builder()

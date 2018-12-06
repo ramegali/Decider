@@ -2,10 +2,14 @@ package com.nedo.decider;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Restaurant implements Parcelable {
+
+    public static final String TAG = Restaurant.class.getSimpleName();
+
     private String name;
     private String phone;
     private String website;
@@ -78,6 +82,7 @@ public class Restaurant implements Parcelable {
 
     @Override
     public int describeContents() {
+        Log.v(TAG, "Name: " + getName() + "\nPhone: " + getPhone() + "\nRating: " + getRating());
         return 0;
     }
 

@@ -32,6 +32,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
 import java.io.FileDescriptor;
@@ -77,12 +78,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     Random rand = new Random();
     String destiny;
     String mLocation;
+    ArrayList<Restaurant> restaurants;
 
     String food_choices[] = {"pizza", "chinese", "japanese", "burgers", "subs",
                              "italian", "mexican", "thai", "greek", "sushi",
                              "seafood", "brazilian", "vietnamese", "bars", "american",
                              "laotian", "sandwiches", "cambodian", "indian", "vegetarian",
-                             "vegan", "mediterranean", "asian" };
+                             "vegan", "mediterranean", "asian", "breakfast_brunch", "buffets",
+                             "ethiopian", "eastern_european", "gluten_free", "hotdog",
+                             "korean", "latin", "mongolian", "mideastern", "modern_european",
+                             "portuguese", "wraps"};
 
 
     @Override
@@ -104,17 +109,54 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         }
 
-        Button startButton = findViewById(R.id.startButton);
+        final Button startButton = findViewById(R.id.startButton);
+        final Button startButton2 = findViewById(R.id.startButton2);
+        final Button startButton3 = findViewById(R.id.startButton3);
+
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                destiny = decide(view);
+                destiny = decide();
+
 //                mLocation = "01453";
                 mLocation = getPostalCodeFromLatLng(location);
 //                Log.d("debug: Zip Code value", mLocation);
 
                 Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
                 intent.putExtra("location", mLocation);
+                intent.putExtra("category", destiny);
                 startActivityForResult(intent, 1);
+
+                startButton.setVisibility(View.INVISIBLE);
+                startButton2.setVisibility(View.VISIBLE);
+                startButton3.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        startButton2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startButton.setVisibility(View.VISIBLE);
+//                Log.v(TAG, "hi from main: got " + restaurants.size() + " restaurants.");
+                Intent intent = new Intent(MainActivity.this, RestaurantListDisplay.class);
+                intent.putParcelableArrayListExtra("restaurants", restaurants);
+                startActivity(intent);
+
+                startButton2.setVisibility(View.INVISIBLE);
+                startButton3.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        startButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                int index = rand.nextInt(restaurants.size());
+                startButton.setVisibility(View.VISIBLE);
+//                Log.v(TAG, "YOUR DESTINY: " + restaurants.get(index).getName());
+                Intent intent = new Intent(MainActivity.this, RestaurantDisplay.class);
+                intent.putParcelableArrayListExtra("restaurants", restaurants);
+                intent.putExtra("index", index);
+                startActivity(intent);
+                startButton2.setVisibility(View.INVISIBLE);
+                startButton3.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -219,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     // to do this asynchronously, as all changes made inside
     // the decide() function are only displayed after the
     // function returns.
-    public String decide(View view)
+    public String decide()
     {
         welcomeText = findViewById(R.id.welcomeText);
         decisionShuffleText = findViewById(R.id.decisionShuffleText);
@@ -246,9 +288,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
-                ArrayList<Restaurant> restaurants = data.getParcelableArrayListExtra("restaurants");
-                Log.v(TAG, "hi from main: " + restaurants.get(0).getName());
 
+//                setContentView(R.layout.activity_restaurant);
+                restaurants = data.getParcelableArrayListExtra("restaurants");
+
+//
+//                TextView displayRestaurantName = findViewById(R.id.restaurantName);
+//                displayRestaurantName.setText(restaurants.get(0).getName());
             }
         }
     }

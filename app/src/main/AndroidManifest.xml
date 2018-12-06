@@ -28,6 +28,18 @@
                 android:value="com.nedo.decider.MainActivity">
             </meta-data>
         </activity>
+        <activity android:name=".RestaurantListDisplay">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nedo.decider.MainActivity">
+            </meta-data>
+        </activity>
+        <activity android:name=".RestaurantDisplay">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nedo.decider.MainActivity">
+            </meta-data>
+        </activity>
     </application>
 
 </manifest>

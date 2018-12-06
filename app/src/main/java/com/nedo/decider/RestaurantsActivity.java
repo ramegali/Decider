@@ -24,17 +24,18 @@ public class RestaurantsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_loading);
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-        getRestaurants(location);
+        String category = intent.getStringExtra("category");
+        getRestaurants(location, category);
     }
 
-    private void getRestaurants(String location) {
+    private void getRestaurants(String location, String category) {
 
         final YelpService yelpService = new YelpService();
-        yelpService.findRestaurants(location, new Callback() {
+        yelpService.findRestaurants(location, category, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -48,7 +49,7 @@ public class RestaurantsActivity extends AppCompatActivity {
 //                    for (int i = 0; i < restaurants.size(); i++) {
 //                        Log.v(TAG, "NAME: " + restaurants.get(i).getName());
 //                        for (String categories : restaurants.get(i).getCategories()
-//                             ) {
+//                                ) {
 //                            Log.v(TAG, "CATEGORIES: " + categories);
 //                        }
 //                    }
@@ -56,10 +57,17 @@ public class RestaurantsActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Intent intent = new Intent();
-                            intent.putParcelableArrayListExtra("restaurants", restaurants);
-                            setResult(RESULT_OK, intent);
-                            finish();
+                            if (restaurants.size() > 0) {
+                                Intent intent = new Intent();
+                                intent.putParcelableArrayListExtra("restaurants", restaurants);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                            else {
+                                Intent intent = new Intent(RestaurantsActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
                         }
                     });
                 }

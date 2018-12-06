@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">Decider</string>
     <string name="startBtnText">Start</string>
-    <string name="welcomeText">Welcome</string>
+    <string name="startBtn2Text">Show Options</string>
+    <string name="destinyBtnText">Take Me To My Destiny</string>
+    <string name="welcomeText">NEDO</string>
+    <string name="helpText">Ready to eat?</string>
     <string name="decidingText">Deciding…</string>
     <string name="done">Done!</string>
     <string name="test">test</string>
     <string name="locationTv"></string>
+    <string name="Restaurant">\"\"</string>
+    <string name="loadingText">Fetching restaurants...</string>
+
+    <string name="nada">NUll</string>
+    <string name="phoneNumber">Phone Number:</string>
+    <string name= "address">Address:</string>
+    <string name ="rating">Rating:</string>
+    <string name ="category">Category:</string>
+    <string name ="restart">Start Over</string>
 </resources>
