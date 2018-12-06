@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         try {
             Geocoder mGeo = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = mGeo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            List<Address> addresses = mGeo.getFromLocation(location.getLatitude(),
+                    location.getLongitude(), 1);
             Address address = addresses.get(0);
             postalCode = address.getPostalCode();
         } catch (IOException e) {
